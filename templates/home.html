@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Title}} - Ynosphere</title>
+    <link rel="stylesheet" href="/static/style/style.css">
+</head>
+<body>
+    <header>
+        <h1>Ynosphere</h1>
+        <ul>
+            <li><a href="/" class="active">Accueil</a></li>
+            <li><a href="#">À propos</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </header>
+
+    <main>
+        <h2>{{.Title}}</h2>
+        <ul>
+            {{range .Articles}}
+                <li><a href="/{{.}}">{{.}}</a></li>
+            {{end}}
+        </ul>
+    </main>
+
+    <footer>
+        <ul>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Twitter (X)</a></li>
+        </ul>
+    </footer>
+</body>
+</html>
