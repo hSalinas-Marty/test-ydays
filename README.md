@@ -22,4 +22,6 @@ Vous pouvez maintenant ouvrir votre navigateur et y rentrer l'url suivante : "ht
 
 ### Il reste maintenant à faire correspondre les pages HTML, le css et rentrer les articles.
 
-### Les articles doivent être ajouter dans le dossier "posts" en format markdown, ils seront lus et affichés directement par le serveur.
+### Les articles doivent être ajouter dans le dossier "posts" en format markdown. 
+
+Avec les infos qui s'afficheront sur la page d'accueil : le titre en premiere ligne, la description en 2eme précédée de "description: " et le lien de l'image précédé de "image: ". Vous trouverez un exemple dans le premier article : "article1.md"

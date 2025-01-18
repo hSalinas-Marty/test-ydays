@@ -12,9 +12,45 @@ import (
 	"github.com/russross/blackfriday/v2"
 )
 
-// Fonction pour afficher la liste des articles disponibles
+// Article structure pour contenir les métadonnées des articles
+type Article struct {
+	Slug        string
+	Title       string
+	Description string
+	ImageURL    string
+}
+
+// Fonction pour analyser les fichiers Markdown et extraire les métadonnées
+func parseMarkdown(filePath string) (Article, error) {
+	content, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		return Article{}, err
+	}
+
+	lines := strings.Split(string(content), "\n")
+	title := strings.TrimPrefix(lines[0], "# ")
+
+	var description, imageURL string
+	for _, line := range lines {
+		if strings.HasPrefix(line, "description:") {
+			description = strings.TrimSpace(strings.TrimPrefix(line, "description:"))
+		}
+		if strings.HasPrefix(line, "image:") {
+			imageURL = strings.TrimSpace(strings.TrimPrefix(line, "image:"))
+		}
+	}
+
+	slug := strings.TrimSuffix(filepath.Base(filePath), ".md")
+	return Article{
+		Slug:        slug,
+		Title:       title,
+		Description: description,
+		ImageURL:    imageURL,
+	}, nil
+}
+
+// Gestionnaire principal
 func handler(w http.ResponseWriter, r *http.Request) {
-	// Si l'URL est "/"
 	if r.URL.Path == "/" {
 		// Lire les fichiers dans le dossier "posts"
 		files, err := ioutil.ReadDir("posts")
@@ -23,30 +59,31 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		// Filtrer les fichiers Markdown
-		var articles []string
+		// Analyser les fichiers Markdown pour récupérer les articles
+		var articles []Article
 		for _, file := range files {
 			if strings.HasSuffix(file.Name(), ".md") {
-				articles = append(articles, strings.TrimSuffix(file.Name(), ".md"))
+				article, err := parseMarkdown(filepath.Join("posts", file.Name()))
+				if err == nil {
+					articles = append(articles, article)
+				}
 			}
 		}
 
-		// Charger le template de la page d'accueil
+		// Charger et exécuter le template pour la page d'accueil
 		tmpl, err := template.ParseFiles("./templates/home.html")
 		if err != nil {
 			log.Fatal("Erreur lors du chargement du template d'accueil : ", err)
 		}
 
-		// Préparer les données pour le template
 		homeData := struct {
 			Title    string
-			Articles []string
+			Articles []Article
 		}{
 			Title:    "Accueil",
-			Articles: articles, // Liste des articles disponibles
+			Articles: articles,
 		}
 
-		// Exécuter le template avec les données
 		err = tmpl.Execute(w, homeData)
 		if err != nil {
 			log.Fatal("Erreur lors de l'exécution du template : ", err)
@@ -54,7 +91,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Pour les autres URL, traiter les articles
+	// Gestion des articles individuels
 	filePath := filepath.Join("posts", r.URL.Path+".md")
 	content, err := ioutil.ReadFile(filePath)
 	if err != nil {
@@ -62,21 +99,19 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Convertir le Markdown en HTML
+	// Convertir le Markdown en HTML avec blackfriday
 	htmlContent := blackfriday.Run(content)
 
-	// Extraire le titre de l'article (première ligne)
+	// Extraire le titre du Markdown
 	lines := strings.Split(string(content), "\n")
-	title := strings.TrimSpace(lines[0])
+	title := strings.TrimPrefix(lines[0], "# ")
 
-	// Charger le template pour les articles
 	tmpl, err := template.ParseFiles("./templates/article.html")
 	if err != nil {
 		log.Fatal("Erreur lors du chargement du template d'article : ", err)
 	}
 
-	// Préparer les données pour le template de l'article
-	article := struct {
+	articleData := struct {
 		Title   string
 		Content template.HTML
 	}{
@@ -84,8 +119,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		Content: template.HTML(htmlContent),
 	}
 
-	// Exécuter le template pour afficher l'article
-	err = tmpl.Execute(w, article)
+	err = tmpl.Execute(w, articleData)
 	if err != nil {
 		log.Fatal("Erreur lors de l'exécution du template : ", err)
 	}

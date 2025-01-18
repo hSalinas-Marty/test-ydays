@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{.Title}} - Ynosphere</title>
+    <!-- Lien vers le fichier CSS -->
     <link rel="stylesheet" href="/static/style/style.css">
 </head>
 <body>
@@ -18,11 +19,19 @@
 
     <main>
         <h2>{{.Title}}</h2>
-        <ul>
+        <ul style="padding: 0; list-style: none;">
             {{range .Articles}}
-                <li><a href="/{{.}}">{{.}}</a></li>
+            <li style="margin-bottom: 20px;">
+                <a href="/{{.Slug}}" style="text-decoration: none; color: inherit; display: block; border: 1px solid #ccc; border-radius: 8px; padding: 15px; overflow: hidden; display: flex; align-items: center; gap: 15px;">
+                    <img src="{{.ImageURL}}" alt="{{.Title}}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;">
+                    <div>
+                        <h3 style="margin: 0;">{{.Title}}</h3>
+                        <p style="margin: 5px 0 0; color: #666;">{{.Description}}</p>
+                    </div>
+                </a>
+            </li>
             {{end}}
-        </ul>
+        </ul>        
     </main>
 
     <footer>
