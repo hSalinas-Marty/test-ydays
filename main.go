@@ -71,23 +71,34 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Charger et exécuter le template pour la page d'accueil
+		// Définir l'article à la une (par exemple, le premier article)
+		var featuredArticle *Article
+		if len(articles) > 0 {
+			featuredArticle = &articles[0]
+			articles = articles[1:] // Supprimez l'article à la une de la liste générale
+		}
+
+		// Charger et exécuter le template pour la page d'accueil
 		tmpl, err := template.ParseFiles("./templates/home.html")
 		if err != nil {
 			log.Fatal("Erreur lors du chargement du template d'accueil : ", err)
 		}
 
 		homeData := struct {
-			Title    string
-			Articles []Article
+			Title           string
+			Articles        []Article
+			FeaturedArticle *Article
 		}{
-			Title:    "Accueil",
-			Articles: articles,
+			Title:           "Nos Articles : ",
+			Articles:        articles,
+			FeaturedArticle: featuredArticle,
 		}
 
 		err = tmpl.Execute(w, homeData)
 		if err != nil {
 			log.Fatal("Erreur lors de l'exécution du template : ", err)
 		}
+
 		return
 	}
 

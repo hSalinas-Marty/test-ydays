@@ -18,6 +18,19 @@
     </header>
 
     <main>
+        <!-- Article à la une -->
+        {{if .FeaturedArticle}}
+        <section style="margin-bottom: 40px; border: 2px solid #ccc; border-radius: 8px; padding: 15px; overflow: hidden; display: flex; align-items: center; gap: 20px;">
+            <img src="{{.FeaturedArticle.ImageURL}}" alt="{{.FeaturedArticle.Title}}" style="width: 200px; height: 200px; object-fit: cover; border-radius: 8px;">
+            <div>
+                <h2 style="margin: 0; font-size: 24px;">À la une : {{.FeaturedArticle.Title}}</h2>
+                <p style="margin: 10px 0; color: #666;">{{.FeaturedArticle.Description}}</p>
+                <a href="/{{.FeaturedArticle.Slug}}" style="text-decoration: none; color: #fff; background-color: #007BFF; padding: 10px 15px; border-radius: 5px;">Lire l'article</a>
+            </div>
+        </section>
+        {{end}}
+    
+        <!-- Liste des articles -->
         <h2>{{.Title}}</h2>
         <ul style="padding: 0; list-style: none;">
             {{range .Articles}}
@@ -33,7 +46,7 @@
             {{end}}
         </ul>        
     </main>
-
+    
     <footer>
         <ul>
             <li><a href="#">Instagram</a></li>
