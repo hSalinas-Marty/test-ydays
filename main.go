@@ -51,6 +51,10 @@ func parseMarkdown(filePath string) (Article, error) {
 
 // Gestionnaire principal
 func handler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path == "/contact" || r.URL.Path == "/about" {
+		http.NotFound(w, r)
+		return
+	}
 	if r.URL.Path == "/" {
 		// Lire les fichiers dans le dossier "posts"
 		files, err := ioutil.ReadDir("posts")
@@ -136,14 +140,41 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func contactHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl, err := template.ParseFiles("./templates/contact.html")
+	if err != nil {
+		log.Fatal("Erreur lors du chargement du template de contact : ", err)
+	}
+
+	err = tmpl.Execute(w, nil)
+	if err != nil {
+		log.Fatal("Erreur lors de l'exécution du template : ", err)
+	}
+}
+
+func aboutHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl, err := template.ParseFiles("./templates/about.html")
+	if err != nil {
+		log.Fatal("Erreur lors du chargement du template à propos : ", err)
+	}
+
+	err = tmpl.Execute(w, nil)
+	if err != nil {
+		log.Fatal("Erreur lors de l'exécution du template : ", err)
+	}
+}
+
 func main() {
 	// Servir les fichiers statiques (CSS, images, etc.)
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
 
-	// Gérer les requêtes pour l'accueil et les articles
+	// Gérer les requêtes
 	http.HandleFunc("/", handler)
+	http.HandleFunc("/contact", contactHandler)
+	http.HandleFunc("/about", aboutHandler)
 
 	// Lancer le serveur
 	fmt.Println("Serveur démarré sur http://localhost:8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
+
 }
