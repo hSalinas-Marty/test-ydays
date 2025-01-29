@@ -6,6 +6,7 @@
     <title>{{.Title}} - Ynosphere</title>
     <!-- Lien vers le fichier CSS -->
     <link rel="stylesheet" href="/static/style/style.css">
+
 </head>
 <body>
     <header>
@@ -20,26 +21,26 @@
     <main>
         <!-- Article à la une -->
         {{if .FeaturedArticle}}
-        <section style="margin-bottom: 40px; border: 2px solid #ccc; border-radius: 8px; padding: 15px; overflow: hidden; display: flex; align-items: center; gap: 20px;">
-            <img src="{{.FeaturedArticle.ImageURL}}" alt="{{.FeaturedArticle.Title}}" style="width: 200px; height: 200px; object-fit: cover; border-radius: 8px;">
+        <section class="featured-article">
+            <img src="{{.FeaturedArticle.ImageURL}}" alt="{{.FeaturedArticle.Title}}" class="featured-image">
             <div>
-                <h2 style="margin: 0; font-size: 24px;">À la une : {{.FeaturedArticle.Title}}</h2>
-                <p style="margin: 10px 0; color: #666;">{{.FeaturedArticle.Description}}</p>
-                <a href="/{{.FeaturedArticle.Slug}}" style="text-decoration: none; color: #fff; background-color: #007BFF; padding: 10px 15px; border-radius: 5px;">Lire l'article</a>
+                <h2>À la une : {{.FeaturedArticle.Title}}</h2>
+                <p>{{.FeaturedArticle.Description}}</p>
+                <a href="/{{.FeaturedArticle.Slug}}" class="btn">Lire l'article</a>
             </div>
         </section>
         {{end}}
-    
+
         <!-- Liste des articles -->
         <h2>{{.Title}}</h2>
-        <ul style="padding: 0; list-style: none;">
+        <ul class="articles-list">
             {{range .Articles}}
-            <li style="margin-bottom: 20px;">
-                <a href="/{{.Slug}}" style="text-decoration: none; color: inherit; display: block; border: 1px solid #ccc; border-radius: 8px; padding: 15px; overflow: hidden; display: flex; align-items: center; gap: 15px;">
-                    <img src="{{.ImageURL}}" alt="{{.Title}}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;">
+            <li>
+                <a href="/{{.Slug}}" class="article-item">
+                    <img src="{{.ImageURL}}" alt="{{.Title}}" class="article-image">
                     <div>
-                        <h3 style="margin: 0;">{{.Title}}</h3>
-                        <p style="margin: 5px 0 0; color: #666;">{{.Description}}</p>
+                        <h3>{{.Title}}</h3>
+                        <p>{{.Description}}</p>
                     </div>
                 </a>
             </li>
