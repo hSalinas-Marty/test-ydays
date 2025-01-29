@@ -5,6 +5,13 @@
     box-sizing: border-box;
     font-family: 'Arial', sans-serif;
 }
+@font-face {
+    font-family: 'Giaza';
+    src: url('/font/giaza-webfont.woff')
+    format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
 
 /* Corps du site */
 body {
@@ -15,12 +22,17 @@ body {
 
 /* En-tête */
 header {
-    background-color: #333;
-    color: #fff;
+    font-family: 'Giaza';
+    background-color: #72224D;
+    color: #FFFCF7;
     padding: 20px;
     text-align: center;
+    align-items: center;
 }
-
+.petitY {
+    width: 70px;
+    height: auto; 
+}
 header h1 {
     font-size: 2.5em;
     margin-bottom: 10px;
@@ -145,7 +157,7 @@ main {
 
 /* Footer */
 footer {
-    background-color: #333;
+    background-color: #72224D;
     color: #fff;
     text-align: center;
     padding: 20px;

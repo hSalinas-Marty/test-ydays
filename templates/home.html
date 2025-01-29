@@ -3,56 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{.Title}} - Ynosphere</title>
-    <!-- Lien vers le fichier CSS -->
     <link rel="stylesheet" href="/static/style/style.css">
+    <title>{{.Title}} - Ynosphere</title>
 </head>
 <body>
     <header>
         <h1>Ynosphere</h1>
+        <img src="/static/image/ypetit.png" alt="Logo" class="petitY">
         <ul>
             <li><a href="/" class="active">Accueil</a></li>
             <li><a href="#">À propos</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
     </header>
-
+   
     <main>
-        <!-- Article à la une -->
-        {{if .FeaturedArticle}}
-        <section style="margin-bottom: 40px; border: 2px solid #ccc; border-radius: 8px; padding: 15px; overflow: hidden; display: flex; align-items: center; gap: 20px;">
-            <img src="{{.FeaturedArticle.ImageURL}}" alt="{{.FeaturedArticle.Title}}" style="width: 200px; height: 200px; object-fit: cover; border-radius: 8px;">
-            <div>
-                <h2 style="margin: 0; font-size: 24px;">À la une : {{.FeaturedArticle.Title}}</h2>
-                <p style="margin: 10px 0; color: #666;">{{.FeaturedArticle.Description}}</p>
-                <a href="/{{.FeaturedArticle.Slug}}" style="text-decoration: none; color: #fff; background-color: #007BFF; padding: 10px 15px; border-radius: 5px;">Lire l'article</a>
-            </div>
+        <section id="section1">
+            <a href="/template/blog1.html">
+                <img src="https://images.radio-canada.ca/q_auto,w_1200/v1/ici-info/16x9/baleine-navire-generique-pollution-sonore.png" alt="Baleine et navire">
+                <h2>Des technologies développées en Atlantique pour réduire la pollution sonore des océans</h2>
+            </a>
         </section>
-        {{end}}
-    
-        <!-- Liste des articles -->
-        <h2>{{.Title}}</h2>
-        <ul style="padding: 0; list-style: none;">
-            {{range .Articles}}
-            <li style="margin-bottom: 20px;">
-                <a href="/{{.Slug}}" style="text-decoration: none; color: inherit; display: block; border: 1px solid #ccc; border-radius: 8px; padding: 15px; overflow: hidden; display: flex; align-items: center; gap: 15px;">
-                    <img src="{{.ImageURL}}" alt="{{.Title}}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;">
+        
+        <div class="articles-container">
+            <a href="/template/blog2.html">
+                <section class="block">
                     <div>
-                        <h3 style="margin: 0;">{{.Title}}</h3>
-                        <p style="margin: 5px 0 0; color: #666;">{{.Description}}</p>
+                        <img src="/image/Proba-3_satellites_pillars blog2.jpg" alt="Proba-3">
+                        <h2>Proba-3, un duo de satellites s’envole pour éclipser le Soleil</h2>
+                        <p>On donne un contexte au titre</p>
+                        <h3>Si on appuie sur l'icône, ça fait aussi un lien</h3>
                     </div>
-                </a>
-            </li>
-            {{end}}
-        </ul>        
+                </section>
+            </a>
+            
+            <a href="/template/blog3.html">
+                <section class="block">
+                    <div>
+                        <img src="/image/Exemple.png" alt="Illustration">
+                        <h2>Titre de l'article</h2>
+                        <p>On donne un contexte au titre</p>
+                        <h3>Si on appuie sur l'icône, ça fait aussi un lien</h3>
+                    </div>
+                </section>
+            </a>
+    
+            <!-- Ajoutez d'autres blocs d'articles ici -->
+        </div>
     </main>
     
-    <footer>
-        <ul>
-            <li><a href="#">Instagram</a></li>
-            <li><a href="#">Facebook</a></li>
-            <li><a href="#">Twitter (X)</a></li>
-        </ul>
-    </footer>
-</body>
-</html>

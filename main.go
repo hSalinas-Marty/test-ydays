@@ -40,6 +40,11 @@ func parseMarkdown(filePath string) (Article, error) {
 		}
 	}
 
+	// Déboguer pour vérifier les valeurs extraites
+	fmt.Println("Title:", title)
+	fmt.Println("Description:", description)
+	fmt.Println("ImageURL:", imageURL)
+
 	slug := strings.TrimSuffix(filepath.Base(filePath), ".md")
 	return Article{
 		Slug:        slug,
@@ -69,6 +74,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 				}
 			}
 		}
+
+		// Déboguer pour afficher les articles dans la console
+		fmt.Println("Articles:", articles)
 
 		// Charger et exécuter le template pour la page d'accueil
 		// Définir l'article à la une (par exemple, le premier article)
